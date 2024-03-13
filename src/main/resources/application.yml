@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: SchedulerToyKotlin
+  sql:
+    init:
+      schema-locations: classpath:db/quartz_tables_h2.sql
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MYSQL;NON_KEYWORDS=USER
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug

@@ -1,0 +1,32 @@
+#Quartz
+org:
+  quartz:
+    scheduler:
+      instanceName: SampleJobScheduler
+      instanceId: AUTO
+      idleWaitTime: 10000
+    threadPool:
+      class: org.quartz.simpl.SimpleThreadPool
+      threadCount: 4
+      threadPriority: 5
+    jobStore:
+      class: org.quartz.impl.jdbcjobstore.JobStoreTX
+      driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      tablePrefix: QRTZ_
+      misfireThreshold: 60000
+      isClustered: false
+      maxMisfiresToHandleAtATime: 10
+      useProperties: true
+      dataSource: mySql
+    #quartz mysql database connection
+    dataSource:
+      mySql:
+        driver: com.mysql.cj.jdbc.Driver
+        provider: hikaricp
+        URL: jdbc:h2:mem://localhost/~/testdb/batch?serverTimezone=UTC&characterEncoding=UTF-8
+        user: sa
+        password:
+        maxConnections: 10
+        idleConnectionValidationSeconds: 50
+        validationQuery: select 0 from dual
+        maxIdleTime: 60
