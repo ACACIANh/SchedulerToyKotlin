@@ -7,10 +7,10 @@ import javax.persistence.*
 class SchedulerJobInfo(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var jobId: Long? = null,
+    var jobClass: String? = null,
     var jobName: String? = null,
     var jobGroup: String? = null,
     var jobStatus: String? = null,
-    var jobClass: String? = null,
 //    var cronExpression: String? = null,
 //    var desc: String? = null,
 //    var interfaceName: String? = null,
