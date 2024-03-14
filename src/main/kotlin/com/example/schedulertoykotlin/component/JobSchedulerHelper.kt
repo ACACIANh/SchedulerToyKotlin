@@ -10,7 +10,10 @@ import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class JobSchedulerHelper {
+class JobSchedulerHelper(
+    val jobDetailFactoryBean: JobDetailFactoryBean,
+    val simpleTriggerFactoryBean: SimpleTriggerFactoryBean,
+) {
 
     fun createJobDetail(
         jobClass: Class<out QuartzJobBean>, isDurable: Boolean,
@@ -18,7 +21,8 @@ class JobSchedulerHelper {
     ): JobDetail? {
         val jobDataMap = JobDataMap().also { it.put(jobName + jobGroup, jobClass.name) }
 
-        return JobDetailFactoryBean().also {
+        //default 세팅 후, 필요데이터 추가 입력 -> jobData 초기화 필요
+        return jobDetailFactoryBean.also {
             it.setJobClass(jobClass)
             it.setDurability(isDurable)
             it.setApplicationContext(context)
@@ -30,9 +34,10 @@ class JobSchedulerHelper {
     }
 
     fun createSimpleTrigger(triggerName: String?, reserveTime: Date, misFireInstruction: Int) =
-        SimpleTriggerFactoryBean().also {
+        simpleTriggerFactoryBean.also {
             triggerName?.let { it1 -> it.setName(it1) }
             it.setStartTime(reserveTime)
+            it.setStartDelay(0)
             it.setRepeatInterval(1)
             it.setRepeatCount(0)
             it.setMisfireInstruction(misFireInstruction)

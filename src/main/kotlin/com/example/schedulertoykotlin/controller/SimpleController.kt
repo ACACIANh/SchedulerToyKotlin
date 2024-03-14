@@ -23,6 +23,7 @@ class SimpleController(
     fun simple(
         @RequestBody request: SimpleJobRequest
     ): ResponseEntity<Any> {
+
         val schedulerJobInfo = SchedulerJobInfo().also {
             it.jobClass = SimpleJob::class.qualifiedName
             it.jobName = request.name
